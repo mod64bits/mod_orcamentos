@@ -1,0 +1,4 @@
+asgiref @ file:///work/ci_py311/asgiref_1676843199969/work
+Django @ file:///work/ci_py311/django_1676851927387/work
+django-safedelete==1.3.2
+sqlparse @ file:///croot/sqlparse_1690901927333/work
