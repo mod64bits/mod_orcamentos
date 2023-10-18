@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # libs
     'safedelete',
+    'django_extensions',
     # apps
     'apps.base',
     'apps.accounts',
