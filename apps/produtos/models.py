@@ -11,8 +11,11 @@ class Categoria(Base):
         return self.nome
 
 
-class Marca(Categoria):
-    pass
+class Marca(Base):
+    nome = models.CharField("Nome", max_length=32)
+
+    def __str__(self):
+        return self.nome
 
 
 class Unidade(Base):
@@ -27,7 +30,7 @@ class Unidade(Base):
 
 
 class Produto(Base):
-    codigo = models.CharField("Código", max_length=15, null=True, blank=True, editable=False, unique=True)
+    codigo = models.CharField("Código", max_length=50, null=True, blank=True, editable=False, unique=True)
     descricao = models.CharField("Descrição",   max_length=255)
     categoria = models.ForeignKey(
         Categoria,
