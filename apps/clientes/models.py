@@ -4,6 +4,7 @@ from apps.accounts.models import User
 
 
 class Clientes(Base):
+    nome = models.CharField('Nome', max_length=200)
     TIPO_CLIENTE = [
         ('normal', 'Normal'),
         ('contrato', 'Contrato'),

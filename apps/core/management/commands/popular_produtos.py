@@ -1,17 +1,10 @@
 import random
-
 from django.core.management.base import BaseCommand
 from faker import Faker
 from apps.produtos.models import Categoria, Unidade, Marca, Produto
 faker = Faker()
 
 
-def get_categoria():
-    nome = faker.user_name()
-    return nome
-
-def get_unidade():
-    pass
 def criar_categoria(qt):
     sigra = ["UN", "MT", "KG"]
     for _ in range(1, qt):

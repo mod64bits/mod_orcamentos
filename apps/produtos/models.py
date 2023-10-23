@@ -60,4 +60,4 @@ class Produto(Base):
     inf_adicionais = models.CharField("Informações Adicionais", max_length=255, null=True, blank=True)
 
     def __str__(self):
-        return f"Código: {self.codigo}-Descrição: {self.descricao}-Custo: {self.custo}"
+        return f"{self.descricao}-Custo: {self.custo}"
