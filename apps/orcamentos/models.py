@@ -6,8 +6,14 @@ from apps.core.ultils import Datas
 
 
 class Orcamento(Base):
-    titulo = models.CharField("Titulo", max_length=100, null=True, blank=True)
-    status = models.CharField("Status", max_length=1,  default="0")
+    STATUS_CHOICES = (
+        ("0", 'Não Enviado'),
+        ("1", 'Em Analise'),
+        ("2", 'Aprovado'),
+        ("3", 'Cancelada'),
+    )
+    titulo = models.CharField("Titulo", max_length=255)
+    status = models.CharField("Status", max_length=1, choices=STATUS_CHOICES, default="0")
     validade = models.DateField('Validade', default=Datas().vencimento())
     empresa = models.ForeignKey(
         Empresa,
@@ -34,6 +40,10 @@ class Orcamento(Base):
 
 
 class ItemProduto(Base):
+    TIPO_CALCULO_CHOICES = (
+        ("0", "Valor"),
+        ("1", "Porcentagem")
+    )
 
     orcamento = models.ForeignKey(
         Orcamento,
@@ -49,13 +59,14 @@ class ItemProduto(Base):
     )
     quantidade = models.PositiveIntegerField('Quantidade', default=1)
 
-    tipo_calculo = models.CharField("Tipo de Calculo", max_length=2, null=True, blank=True)
+    tipo_calculo = models.CharField("Tipo de Calculo", max_length=2, choices=TIPO_CALCULO_CHOICES, default="1")
 
+    valor_porcentagem = models.DecimalField('Porcentagem', decimal_places=2, max_digits=8, null=True, blank=True)
+    valor_acrescimo = models.DecimalField('Acréscimo', decimal_places=2, max_digits=8, null=True, blank=True)
     lucro_venda = models.DecimalField("Lucro venda", decimal_places=2, max_digits=8, null=True, blank=True)
     preco = models.DecimalField('Preço', decimal_places=2, max_digits=8, null=True, blank=True)
     total = models.DecimalField('Total', decimal_places=2, max_digits=8, null=True, blank=True)
 
     def __str__(self):
         return self.produto.codigo
-
 

@@ -1,9 +1,8 @@
 from django.forms import ModelForm
 from .models import ItemProduto, Produto
 from django import forms
-from datetime import date
 from faker import Faker
-fake = Faker()
+faker = Faker('pt_BR')
 
 STATUS_CHOICES = (
         ("0", 'Não Enviado'),
@@ -22,26 +21,20 @@ class ItemProdutoForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.fields["tipo_calculo"] = forms.ChoiceField(widget=forms.RadioSelect, choices=STATUS_CHOICES, initial='0')
 
-
     class Meta:
         model = ItemProduto
         fields = "__all__"
-
-
 
 
 class OrcamentoForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["status"] = forms.ChoiceField(widget=forms.RadioSelect, choices=STATUS_CHOICES, initial='0')
+        self.fields["total"].widget.attrs.update({'disabled': 'true'})
+        self.fields["total_equipamentos"].widget.attrs.update({'disabled': 'true'})
+        self.fields["total_mao_de_obra"].widget.attrs.update({'disabled': 'true'})
 
     class Meta:
         model = Produto
         fields = "__all__"
 
-    def save(self, commit=True):
-        obj = super(OrcamentoForm, self).save(commit=False)
-        obj.codigo = fake.bothify(text=F"", letters='ABCDE')
-        if commit:
-            obj.save()
-        return obj
