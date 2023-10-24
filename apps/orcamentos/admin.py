@@ -8,6 +8,10 @@ class ItemProdutoInline(admin.TabularInline):
     model = ItemProduto
     extra = 0
 
+    def save(self, request, obj, form, change):
+        if obj.tipo_calculo == "1":
+            obj.save()
+
 
 @admin.register(ItemProduto)
 class ItemProdutoAdmin(admin.ModelAdmin):
@@ -52,6 +56,7 @@ class ItemProdutoAdmin(admin.ModelAdmin):
 class OrcamentoAdmin(SummernoteModelAdmin):
     summernote_fields = '__all__'
     form = OrcamentoForm
+    radio_fields = {"status": admin.VERTICAL}
     list_display = ("codigo", "titulo", "cliente", "validade", "total_equipamentos", "total", "status")
     list_editable = ["status"]
     inlines = [
@@ -74,7 +79,11 @@ class OrcamentoAdmin(SummernoteModelAdmin):
         (
             "Orçamento",
             {
-                "fields": [("cliente", "empresa", "validade", "status"), "descricao", ("total", "total_equipamentos", "total_mao_de_obra")],
+                "fields": [("cliente", "empresa", "validade", "status"), "descricao",
+                           ("total_equipamentos", "total_mao_de_obra", "total")],
             },
         ),
     ]
+
+    class Media:
+        js = ('orcamento/js/item_ptoduto.js',)
